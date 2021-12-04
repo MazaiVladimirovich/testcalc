@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Calc</title>
+<style>
+.body {
+    width: 40%;
+    height: 55%;
+    position: absolute;
+	top: 15%;
+    left: 30%;
+    
+    overflow: hidden;
+	border: 0px groove black;
+	border-radius: 10px;
+	overflow: auto;
+	background: linear-gradient(#2F4F4F, 10%, #DCDCDC);
+}
+
+.hide {
+  display: none;
+}
+
+.display {
+	margin: 5%;
+	border: 3px groove black;
+	border-radius: 10px;
+	width: 40%;
+	position: absolute;
+	right: 0;
+	text-align: right;
+	background: #DCDCDC;
+	
+}
+
+.displayER {
+	margin: 5%;
+	text-align: right;
+	border: 3px groove black;
+	border-radius: 4px;
+	border-color: transparent;
+	width: 5%;
+	position: absolute;
+	left: 0;
+	text-align: center;
+	color: red;
+	
+}
+
+.digits,.operations {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+		margin-top:15%;
+		text-align: center;
+		align-items: center;
+  justify-content: center;
+		
+    }
+.operations {
+		margin-top: 5%;
+		margin-bottom: 5%;
+	}
+ .digits>*, .operations>* {
+        flex: 0 0 32%;
+		border: 3px groove black;
+		border-radius: 8px;
+		background: #A9A9A9;
+		
+    }
+
+.footer {
+	margin-top: 15%;
+	border: 3px groove black;
+	border-radius: 4px;
+	border-color: transparent;
+	position: absolute;
+	right: 0;
+	width: 2%;
+	height: 2%;
+	font-size: 5px;
+	
+}
+
+</style>
+<script type="text/javascript">
+let sybols = "0123456789:*-+/.";
+document.addEventListener('keydown', (event) => {
+  const keyName = event.key;
+console.log(keyName);
+  if (sybols.includes(keyName) || keyName == "Enter") {
+    if (keyName == "/") {sentValue(":")}
+	else if (keyName == "Enter") {sentValue("=");}
+	else {sentValue(keyName);}
+    console.log(keyName);
+    return;
+  }
+
+}, false);
+
+
+
+var outputValue = 0;
+let operation = 0;
+
+function sentValue(input)
+{
+
+if (document.getElementById("result").textContent.length >= 1 && (document.getElementById("result").textContent[0] == '+' || document.getElementById("result").textContent[0] == '-' || document.getElementById("result").textContent[0] == '*' || document.getElementById("result").textContent[0] == ':')) {
+	console.log(document.getElementById("result").textContent[0]);
+	document.getElementById("result").textContent = (document.getElementById("result").textContent).substring(1);
+}
+
+
+if (input == "+") {
+	if (document.getElementById("result").textContent.length > 0) {
+	ouptputValue = Number(document.getElementById("result").textContent);}
+	document.getElementById("result").textContent = "+";
+	operation = "+";
+	
+}
+
+else if (input == "-") {
+	if (document.getElementById("result").textContent.length > 0) {
+	ouptputValue = Number(document.getElementById("result").textContent); }
+	document.getElementById("result").textContent = "-";
+	operation = "-";
+}
+
+else if (input == "*") {
+	if (document.getElementById("result").textContent.length > 0) {
+	ouptputValue = Number(document.getElementById("result").textContent);}
+	document.getElementById("result").textContent = "*";
+	operation = "*";
+}
+
+else if (input == ":") {
+	if (document.getElementById("result").textContent.length > 0) {
+	ouptputValue = Number(document.getElementById("result").textContent);}
+	document.getElementById("result").textContent = ":";
+	operation = ":";
+}
+
+else if (input == "=") {
+	if (operation == "+") {
+	outputValue = ouptputValue + Number(document.getElementById("result").textContent);
+	document.getElementById("result").textContent = outputValue;
+	}
+	else if (operation == "-") {
+	outputValue = ouptputValue - Number(document.getElementById("result").textContent);
+	document.getElementById("result").textContent = outputValue;
+	}
+	else if (operation == "*") {
+	outputValue = ouptputValue * Number(document.getElementById("result").textContent);
+	document.getElementById("result").textContent = outputValue;
+	}
+	else if (operation == ":") {
+	outputValue = ouptputValue / Number(document.getElementById("result").textContent);
+	document.getElementById("result").textContent = outputValue;
+	}
+}
+
+//else if (input == ".") {
+//console.log("214");
+//}
+
+else if (input == "reboot") {
+document.getElementById("result").textContent = 0;
+operation = 0;
+outputValue = 0;
+}
+
+else {
+	if ( (input == 0) && (document.getElementById("result").textContent.length == 1)) {
+		document.getElementById("result").textContent = 0;
+}
+	else if ( (input != 0) && (document.getElementById("result").textContent.length == 1) && document.getElementById("result").textContent == 0) {
+		document.getElementById("result").textContent = input.toString();
+}
+	else if (document.getElementById("result").textContent.length == 12) {
+		
+}
+	else {
+	document.getElementById("result").textContent = document.getElementById("result").textContent + input.toString();
+	}
+
+}
+
+}
+
+
+
+
+
+</script>
+</head>
+<body>
+<div class="list">
+	<div class="body">
+		<div class="displayER hide">Error</div>
+		<div class="display">
+		<output name="result" id="result">0</output>
+		</div>
+		<div class="digits">
+			<div class="button dig1" onclick="sentValue(1)">1</div>
+			<div class="button dig2" onclick="sentValue(2)">2</div>
+			<div class="button dig3" onclick="sentValue(3)">3</div>
+			<div class="button dig4" onclick="sentValue(4)">4</div>
+			<div class="button dig5" onclick="sentValue(5)">5</div>
+			<div class="button dig6" onclick="sentValue(6)">6</div>
+			<div class="button dig7" onclick="sentValue(7)">7</div>
+			<div class="button dig8" onclick="sentValue(8)">8</div>
+			<div class="button dig9" onclick="sentValue(9)">9</div>
+			<div class="button dig0" onclick="sentValue(0)">0</div>
+			<div class="button dig0" onclick="sentValue('.')">.</div>
+			<div class="button dig0" onclick="sentValue('reboot')">C</div>
+		</div>
+		<div class="operations">
+			<div class="button plus" onclick="sentValue('+')">+</div>
+			<div class="button subst" onclick="sentValue('-')">-</div>
+			<div class="button equal" onclick="sentValue('=')">=</div>
+			<div class="button multip" onclick="sentValue('*')">*</div>
+			<div class="button division" onclick="sentValue(':')">:</div>
+			
+		</div>
+		<div class="footer">By Ilia 2021.</div>
+	</div>
+</div>	
+</body>
+</html>
